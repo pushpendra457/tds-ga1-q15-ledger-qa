@@ -1,0 +1,17 @@
+# Render Blueprint: https://render.com/docs/blueprint-spec
+# Deploy with Render Dashboard -> New -> Blueprint, or `render blueprint launch`.
+services:
+  - type: web
+    name: tds-ga1-q15-ledger-qa
+    runtime: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn main:app --host 0.0.0.0 --port $PORT"
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.6"
+      # Optional: override the (signed) upstream ledger URL if it ever changes.
+      # Left unset, main.py uses the built-in signed URL baked in at build time.
+      # - key: LEDGER_BASE_URL
+      #   sync: false
